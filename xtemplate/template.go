@@ -1,6 +1,7 @@
 package xtemplate
 
 import (
+	httpTemplate "html/template"
 	"io"
 	"io/fs"
 	"text/template"
@@ -64,4 +65,8 @@ func Must(t *Template, err error) *Template {
 func ParseFiles(filenames ...string) (*Template, error) {
 	x, e := template.ParseFiles(filenames...)
 	return &Template{t: x}, e
+}
+
+func StringToHtml(data string) httpTemplate.HTML {
+	return httpTemplate.HTML(data)
 }
