@@ -39,7 +39,7 @@ func ListenAndServe(address string, handler http.Handler) error {
 	return http.ListenAndServe(address, handler)
 }
 
-func SocketCallMethod(ep any, methodName string, services map[string]reflect.Value, requestCls, responseCls string) (results []reflect.Value, err error) {
+func SocketCallMethod(ep any, methodName string, services map[string]reflect.Value, requestCls, responseCls string,request,empty any) (results []reflect.Value, err error) {
 	var method reflect.Value
 	for _, service := range services {
 		method = service.MethodByName(methodName)
@@ -68,31 +68,11 @@ func SocketCallMethod(ep any, methodName string, services map[string]reflect.Val
 		//reflect.ValueOf(request),
 	}
 
-	type Common struct {
-		Version string `json:"version"`  //请求版本
-		Uid     uint   `json:"uid"`      //用户id
-		UaToken string `json:"ua_token"` //token串
-	}
-
-	type Request struct {
-		RequestId  uint64  `json:"request_id"`
-		MethodName string  `json:"method_name"`
-		Data       any     `json:"data"`
-		Timestamp  int64   `json:"timestamp"`
-		Timeout    uint32  `json:"timeout"`
-		Common     *Common `json:"common"`
-	}
-
-	request := &Request{}
-
-	type Empty struct {
-	}
-
 	switch requestCls {
 	case "*socket.Request":
 		args = append(args, reflect.ValueOf(request))
 	case "*socket.Empty":
-		args = append(args, reflect.ValueOf(&Empty{}))
+		args = append(args, reflect.ValueOf(empty))
 	}
 
 	defer func() {
