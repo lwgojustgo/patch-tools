@@ -32,6 +32,10 @@ func Open(name string) (*os.File, error) {
 	return os.OpenFile(name, os.O_RDONLY, 0)
 }
 
+func Create(name string) (*os.File, error) {
+	return os.Create(name)
+}
+
 func ReadFile(name string) ([]byte, error) {
 	return os.ReadFile(name)
 }
