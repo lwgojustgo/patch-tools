@@ -34,7 +34,7 @@ func AToByteHelp(v string) []byte {
 	return *(*[]byte)(unsafe.Pointer(&h))
 }
 
-func GoStringToCString(logPath string) C.CString {
+func GoStringToCString(logPath string) *C.char {
 	return C.CString(logPath)
 }
 
