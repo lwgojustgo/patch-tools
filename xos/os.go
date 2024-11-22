@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"reflect"
@@ -27,6 +28,14 @@ func Join(elem ...string) string {
 	return filepath.Join(elem...)
 }
 
+func Open(name string) (*os.File, error) {
+	return os.OpenFile(name, os.O_RDONLY, 0)
+}
+
+func ReadFile(name string) ([]byte, error) {
+	return os.ReadFile(name)
+}
+
 func TLSConfig() *tls.Config {
 	return &tls.Config{InsecureSkipVerify: true}
 }
@@ -39,7 +48,7 @@ func ListenAndServe(address string, handler http.Handler) error {
 	return http.ListenAndServe(address, handler)
 }
 
-func SocketCallMethod(ep any, methodName string, services map[string]reflect.Value, requestCls, responseCls string,request,empty any) (results []reflect.Value, err error) {
+func SocketCallMethod(ep any, methodName string, services map[string]reflect.Value, requestCls, responseCls string, request, empty any) (results []reflect.Value, err error) {
 	var method reflect.Value
 	for _, service := range services {
 		method = service.MethodByName(methodName)
