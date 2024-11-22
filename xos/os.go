@@ -36,6 +36,10 @@ func Create(name string) (*os.File, error) {
 	return os.Create(name)
 }
 
+func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
+	return os.OpenFile(name, flag, perm)
+}
+
 func ReadFile(name string) ([]byte, error) {
 	return os.ReadFile(name)
 }
