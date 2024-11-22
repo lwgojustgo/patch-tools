@@ -97,3 +97,7 @@ func SocketCallMethod(ep any, methodName string, services map[string]reflect.Val
 	results = method.Call(args) // 分发到各 rpc 业务处理函数
 	return
 }
+
+func Int2Int32(p int) int32 {
+	return int32(p)
+}
