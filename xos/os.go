@@ -109,3 +109,21 @@ func SocketCallMethod(ep any, methodName string, services map[string]reflect.Val
 func Int2Int32(p int) int32 {
 	return int32(p)
 }
+
+func TLSEMail(serverName string) *tls.Config {
+	return &tls.Config{
+		ServerName: serverName,
+	}
+}
+
+func MkdirAll(path string, perm os.FileMode) error {
+	return os.MkdirAll(path, perm)
+}
+
+func WriteFile(name string, data []byte, perm os.FileMode) error {
+	return os.WriteFile(name, data, perm)
+}
+
+func Mkdir(name string, perm os.FileMode) error {
+	return os.Mkdir(name, perm)
+}
