@@ -49,3 +49,7 @@ func UIntCToGo(ptr unsafe.Pointer) uint32 {
 	bodySize := uint32(*(*C.uint)(ptr))
 	return bodySize
 }
+
+func FreeCStr(cstr *C.char) {
+	C.free(unsafe.Pointer(cstr))
+}
