@@ -106,8 +106,12 @@ func SocketCallMethod(ep any, methodName string, services map[string]reflect.Val
 	return
 }
 
-func Int2Int32(p int) int32 {
-	return int32(p)
+// 修复漏洞
+func Int2Int32(p int) (int32, error) {
+	if p < -2147483648 || p > 2147483647 {
+		return 0, fmt.Errorf("value %d out of range for int32", p)
+	}
+	return int32(p), nil
 }
 
 func TLSEMail(serverName string) *tls.Config {
